@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback - CinemaPulse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">🎬 CinemaPulse</div>
+            <ul class="nav-links">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/analytics">Analytics</a></li>
+                <li><a href="/">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="feedback-form">
+            <div class="card">
+                <h1 style="margin-bottom: 0.5rem;">Share Your Thoughts</h1>
+                <p style="color: var(--text-gray); margin-bottom: 2rem;" id="movie-title-display">
+                    Loading movie...
+                </p>
+                
+                <form id="feedbackForm">
+                    <input type="hidden" id="movie_id" name="movie_id" value="{{ movie_id }}">
+                    
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input 
+                            type="text" 
+                            id="name" 
+                            name="name" 
+                            class="form-control" 
+                            placeholder="John Doe"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            class="form-control" 
+                            placeholder="you@example.com"
+                            required
+                        >
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rating">Rating</label>
+                        <div class="star-rating">
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+                        </div>
+                        <input type="hidden" id="rating" name="rating" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comment">Your Review</label>
+                        <textarea 
+                            id="comment" 
+                            name="comment" 
+                            class="form-control" 
+                            placeholder="Share your thoughts about this movie..."
+                            required
+                        ></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        Submit Feedback
+                    </button>
+                    
+                    <button type="button" class="btn btn-secondary" style="margin-top: 1rem;" onclick="window.history.back()">
+                        Back to Movie
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

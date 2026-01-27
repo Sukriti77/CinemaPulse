@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You - CinemaPulse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">🎬 CinemaPulse</div>
+            <ul class="nav-links">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/analytics">Analytics</a></li>
+                <li><a href="/">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="thankyou-container">
+            <div class="card">
+                <div class="success-icon">✓</div>
+                
+                <h1>Thank You!</h1>
+                
+                <p>
+                    Your feedback has been successfully submitted. 
+                    Your insights help others discover great movies!
+                </p>
+                
+                <a href="/dashboard" class="btn btn-primary">
+                    Back to Dashboard
+                </a>
+                
+                <a href="/analytics" class="btn btn-secondary" style="margin-top: 1rem;">
+                    View Analytics
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

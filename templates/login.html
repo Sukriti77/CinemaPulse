@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaPulse - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="card login-card">
+            <h1>🎬 CinemaPulse</h1>
+            <p>Real-time Movie Feedback Platform</p>
+            
+            <!-- Tab Buttons -->
+            <div class="auth-tabs" style="display: flex; gap: 1rem; margin: 2rem 0 1rem 0;">
+                <button id="loginTab" class="tab-btn active" onclick="showLogin()">Login</button>
+                <button id="signupTab" class="tab-btn" onclick="showSignup()">Sign Up</button>
+            </div>
+            
+            <!-- Login Form -->
+            <form id="loginForm" style="display: block;">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="login-email" 
+                        class="form-control" 
+                        placeholder="you@example.com"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <input 
+                        type="password" 
+                        id="login-password" 
+                        class="form-control" 
+                        placeholder="Enter your password"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    Login
+                </button>
+                
+                <p style="margin-top: 1.5rem; color: var(--text-gray); font-size: 0.9rem;">
+                    Demo credentials:<br>
+                    Admin: admin@cinemapulse.com / admin123<br>
+                    Viewer: viewer@cinemapulse.com / viewer123
+                </p>
+            </form>
+            
+            <!-- Signup Form -->
+            <form id="signupForm" style="display: none;">
+                <div class="form-group">
+                    <label for="signup-name">Full Name</label>
+                    <input 
+                        type="text" 
+                        id="signup-name" 
+                        class="form-control" 
+                        placeholder="John Doe"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="signup-email" 
+                        class="form-control" 
+                        placeholder="you@example.com"
+                        required
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-password">Password</label>
+                    <input 
+                        type="password" 
+                        id="signup-password" 
+                        class="form-control" 
+                        placeholder="At least 6 characters"
+                        required
+                        minlength="6"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="signup-confirm">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="signup-confirm" 
+                        class="form-control" 
+                        placeholder="Re-enter password"
+                        required
+                    >
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    Create Account
+                </button>
+            </form>
+            
+            <div id="error-message" style="display: none; margin-top: 1rem; padding: 1rem; background: rgba(255, 68, 68, 0.1); border: 1px solid #ff4444; border-radius: 8px; color: #ff4444;"></div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        function showLogin() {
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loginTab').classList.add('active');
+            document.getElementById('signupTab').classList.remove('active');
+            hideError();
+        }
+        
+        function showSignup() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('loginTab').classList.remove('active');
+            document.getElementById('signupTab').classList.add('active');
+            hideError();
+        }
+        
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+        }
+        
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
+        }
+        
+        // Signup form handler
+        document.getElementById('signupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            hideError();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirm = document.getElementById('signup-confirm').value;
+            
+            // Validate passwords match
+            if (password !== confirm) {
+                showError('Passwords do not match!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/signup', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ name, email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Redirect based on role
+                    if (data.user.role === 'admin') {
+                        window.location.href = '/admin';
+                    } else {
+                        window.location.href = '/dashboard';
+                    }
+                } else {
+                    showError(data.message || 'Signup failed');
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                showError('Signup failed. Please try again.');
+            }
+        });
+    </script>
+</body>
+</html>

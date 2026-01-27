@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CinemaPulse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">🎬 CinemaPulse</div>
+            <ul class="nav-links">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li id="analytics-link" style="display: none;"><a href="/analytics">Analytics</a></li>
+                <li id="admin-link" style="display: none;"><a href="/admin">Admin Panel</a></li>
+                <li><a href="/" onclick="logout()">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Featured Movies</h1>
+            <p>Share your thoughts and help others discover great films</p>
+        </div>
+        
+        <!-- Search Bar -->
+        <div class="search-bar" style="margin: 2rem 0;">
+            <div style="max-width: 800px; margin: 0 auto;">
+                <input 
+                    type="text" 
+                    id="search-input" 
+                    class="form-control" 
+                    placeholder="🔍 Search movies by title or description..."
+                    style="margin-bottom: 1rem;"
+                >
+                
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <select id="genre-filter" class="form-control" style="flex: 1; min-width: 200px;">
+                        <option value="">All Genres</option>
+                        <option value="Action">Action</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Drama">Drama</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Romance">Romance</option>
+                        <option value="Sci-Fi">Sci-Fi</option>
+                        <option value="Thriller">Thriller</option>
+                    </select>
+                    
+                    <select id="rating-filter" class="form-control" style="flex: 1; min-width: 200px;">
+                        <option value="">All Ratings</option>
+                        <option value="4.5">⭐ 4.5+ Stars</option>
+                        <option value="4.0">⭐ 4.0+ Stars</option>
+                        <option value="3.5">⭐ 3.5+ Stars</option>
+                        <option value="3.0">⭐ 3.0+ Stars</option>
+                    </select>
+                    
+                    <button onclick="searchMovies()" class="btn btn-primary" style="width: auto; padding: 0.875rem 1.5rem;">
+                        Search
+                    </button>
+                    <button onclick="resetSearch()" class="btn btn-secondary" style="width: auto; padding: 0.875rem 1.5rem;">
+                        Reset
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Movie Grid -->
+        <div class="movie-grid">
+            <!-- Movies will be loaded dynamically via JavaScript -->
+            <div style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                Loading movies...
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Check user role and show appropriate links
+        async function checkUserRole() {
+            try {
+                const response = await fetch('/api/session');
+                const data = await response.json();
+                if (data.logged_in && data.user.role === 'admin') {
+                    document.getElementById('analytics-link').style.display = 'list-item';
+                    document.getElementById('admin-link').style.display = 'list-item';
+                }
+            } catch (error) {
+                console.error('Error checking role:', error);
+            }
+        }
+        
+        function logout() {
+            sessionStorage.clear();
+            localStorage.clear();
+        }
+        
+        checkUserRole();
+    </script>
+</body>
+</html>

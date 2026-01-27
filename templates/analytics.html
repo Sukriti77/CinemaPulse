@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - CinemaPulse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="logo">🎬 CinemaPulse</div>
+            <ul class="nav-links">
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li><a href="/analytics">Analytics</a></li>
+                <li><a href="/">Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-header">
+            <h1>Analytics Dashboard</h1>
+            <p>Real-time insights from audience feedback</p>
+        </div>
+        
+        <!-- Overall Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Total Movies</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Total Reviews</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-value">0.0</div>
+                <div class="stat-label">Average Rating</div>
+            </div>
+            
+            <div class="stat-card">
+                <div class="stat-value">0%</div>
+                <div class="stat-label">Positive Feedback</div>
+            </div>
+        </div>
+        
+        <!-- Movie-wise Statistics -->
+        <div style="margin-top: 3rem;">
+            <h2 style="margin-bottom: 1.5rem; font-size: 1.8rem;">Movie Performance</h2>
+            
+            <div class="movie-stats">
+                <!-- Movies will be loaded dynamically via JavaScript -->
+                <div style="text-align: center; color: var(--text-gray); padding: 2rem;">
+                    Loading analytics...
+                </div>
+            </div>
+        </div>
+        
+        <!-- Insights Section -->
+        <div style="margin-top: 3rem;">
+            <div class="card">
+                <h2 style="margin-bottom: 1rem;">Key Insights</h2>
+                <ul style="color: var(--text-gray); line-height: 2;">
+                    <li>📊 Analytics data loaded from database</li>
+                    <li>⭐ Real-time movie ratings and statistics</li>
+                    <li>💬 Viewer feedback aggregated and analyzed</li>
+                    <li>🎯 Admin-only access for business insights</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+// Auto-refresh every 10 seconds
+setInterval(() => {
+    loadAnalytics();
+}, 10000);
+</script>
+</body>
+</html>
