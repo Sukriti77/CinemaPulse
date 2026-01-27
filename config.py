@@ -50,7 +50,7 @@ class AWSConfig(Config):
     USE_DYNAMODB = True
     
     # AWS region
-    AWS_REGION = os.environ.get('AWS_REGION', 'us-east-1')
+    AWS_REGION = os.environ.get('AWS_REGION', 'eu-north-1')
     
     # DynamoDB table names
     DYNAMODB_USERS_TABLE = os.environ.get('DYNAMODB_USERS_TABLE', 'CinemaPulse-Users')
@@ -63,7 +63,7 @@ class AWSConfig(Config):
     
     # AWS server settings (EC2)
     HOST = '0.0.0.0'
-    PORT = 80
+    PORT = 5000
 
 
 # Configuration selector

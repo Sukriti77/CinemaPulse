@@ -4,7 +4,6 @@ Main entry point with API routes and session management
 """
 
 from flask import Flask, render_template, session, redirect
-from flask_session import Session
 from config import get_config
 
 # Initialize Flask app
@@ -14,8 +13,6 @@ app = Flask(__name__)
 config = get_config()
 app.config.from_object(config)
 
-# Initialize session
-Session(app)
 
 # ========== REGISTER API BLUEPRINTS ==========
 from routes.auth_routes import auth_bp
